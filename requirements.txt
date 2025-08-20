@@ -1,0 +1,16 @@
+#Core Libraries
+pandas==2.2.2
+numpy==1.26.4
+
+#Machine Learning
+scikit-learn==1.4.2
+xgboost==2.0.3
+
+#Visualization
+matplotlib==3.8.4
+pydeck==0.8.1b0
+
+#Web App Framework
+streamlit==1.35.0
+
+#Jupyter Notebook == 1.0.0

@@ -15,9 +15,9 @@ generate_mae_by_zip(
 
 # Load result
 mae_df = pd.read_csv("data/mae_by_zip.csv")
-mae_df['MAE_str'] = mae_df['MAE'].apply(lambda x: round(x, 2))
+mae_df['MAE_str'] = mae_df['MAE'].apply(lambda x: "%.2f" % x)
 # Precompute color
-mae_df['color'] = mae_df['MAE'].apply(lambda x: [255, max(0, 160 - int(x // 50)), 0, 160])
+mae_df['color'] = mae_df['MAE'].apply(lambda x: [255, max(0, 160 - int(x // 200)), 0, 160])
 
 # Build heatmap layer
 layer = pdk.Layer(
@@ -40,5 +40,5 @@ view_state = pdk.ViewState(
 st.pydeck_chart(pdk.Deck(
     layers=[layer],
     initial_view_state=view_state,
-    tooltip={"text": "ZIP: {RegionName}\nMAE: ${MAE}"}
+    tooltip={"text": "ZIP: {RegionName}\nMAE: ${MAE_str}"}
 ))

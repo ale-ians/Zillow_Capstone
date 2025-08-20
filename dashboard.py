@@ -8,7 +8,7 @@ import pydeck as pdk
 # Load housing data
 @st.cache_data
 def load_data():
-    return pd.read_csv('data/colorado_home_values.csv', parse_dates=['date'])
+    return pd.read_csv('data/processed/colorado_home_values.csv', parse_dates=['date'])
 
 st.title('Colorado Home Price Forecast Dashboard')
 
