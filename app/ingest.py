@@ -14,7 +14,7 @@ def run(raw_path, out_path):
 
     #Keep Colorado ZIP Codes (80xxx to 81xxx up to 816xx), zfill
     df['RegionName'] = df['RegionName'].astype(str).str.zfill(5)
-    df = df[df[['RegionName'].str.match(r'(80\d{3}|81[0-6]\d)$')]
+    df = df[df['RegionName'].str.match(r'^80[0-9]{2}|^81[0-6][0-9]')]
 
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     df[['RegionName', 'date', 'price']].to_csv(out_path, index=False)
