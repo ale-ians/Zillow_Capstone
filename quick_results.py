@@ -55,10 +55,7 @@ def load_geo(path: str) -> pd.DataFrame:
 
 @st.cache_data
 def load_mae_from_artifacts(preferred_model: str = "rf") -> pd.DataFrame:
-    """
-    Try to load MAE CSV produced by the pipeline. Falls back to the other model.
-    Returns empty DataFrame if none are available.
-    """
+
     order = [preferred_model, "xgb" if preferred_model == "rf" else "rf"]
     for m in order:
         path = ART_MAE_RF if m == "rf" else ART_MAE_XGB
@@ -84,10 +81,7 @@ def forecast_home_values(
     lags: tuple = DEFAULT_LAGS,
     forecast_months: int = DEFAULT_FORECAST_MONTHS,
 ):
-    """
-    Uses add_lag_features + train_one_zip (your pipeline) for a single ZIP,
-    then rolls a recursive forecast for `forecast_months`.
-    """
+
     df_zip = df_all.loc[df_all["RegionName"] == target_zip, ["date", "price"]].copy()
     if df_zip.empty:
         return None, None, None  # history, forecast, mae_row
@@ -290,13 +284,33 @@ with tab_metrics:
         show["MAE"] = show["MAE"].map(lambda x: f"${x:,.0f}")
         st.dataframe(show, use_container_width=True)
 
-        st.subheader("Distribution of MAE Across ZIPs")
+
+
+        cap = st.sidebar.number_input("Histogram MAE cap ($)", min_value=1000, max_value=200000,
+                                      value=100000, step=10000)
+
+        # make sure MAE is numeric
+        mae_numeric = pd.to_numeric(mae_all["MAE"], errors="coerce").dropna()
+
+        # cap values at the chosen threshold (so extreme outliers don't stretch bins)
+        mae_capped = np.clip(mae_numeric, a_min=0, a_max=cap)
+
+        fig, ax = plt.subplots()
+        ax.hist(mae_capped, bins=40)
+        ax.set_title(f"MAE Histogram (capped at ${cap:,.0f})")
+        ax.set_xlabel("MAE ($)")
+        ax.set_ylabel("Count")
+        ax.set_xlim(0, cap)  # keep x-axis within the cap
+        st.pyplot(fig)
+
+
+        '''st.subheader("Distribution of MAE Across ZIPs")
         fig2, ax2 = plt.subplots(figsize=(8, 3))
         ax2.hist(mae_all["MAE"].dropna(), bins=30, edgecolor="white")
         ax2.set_title("MAE Histogram")
         ax2.set_xlabel("MAE ($)")
         ax2.set_ylabel("Count")
         plt.tight_layout()
-        st.pyplot(fig2)
+        st.pyplot(fig2)'''
 
 
