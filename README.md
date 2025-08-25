@@ -1,9 +1,15 @@
 Forecasting Colorado Home Values by Zip Code
 
 1. Quick Results Summary
-   - Overall Median Mean Absolute Error (MAE) across all ZIPS: $8,893
-   - Best-performing ZIP: 81003 (MAE = $ 206)
-   - Worst-performing ZIP: 81615 (MAE = $426,541)
+   - Overall Median Mean Absolute Error (MAE) across all ZIPS 
+     - Random Forest: $8,893
+     - XGBoost: $9,364
+   - Best-performing ZIP 
+     - Random Forest: 81003 (MAE = $ 206)
+     - XGBoost: 81001 (Mae = $521)
+   - Worst-performing ZIP
+     - Random Forest: 81615 (MAE = $426,541)
+     - XGBoost: 81615 (MAE = $376,041)
    - Forecast Horizon: 6 Months
    - Visualization Highlights
      - Line Charts comparing actual vs predicted values
@@ -19,7 +25,7 @@ Forecasting Colorado Home Values by Zip Code
 3. Data Sources
    -Primary Dataset [Zillow Research ZHVI Data](https://www.zillow.com/research/data/) -Single Family, All Homes, Smoothed
       & Seasonally Adjusted.
-   -Geospacial Data: USPS ZIP centroid file for latitude/longitude mapping. 
+   -Geo-spacial Data: USPS ZIP centroid file for latitude/longitude mapping. 
    -Preprocessing:
         -Converted to long format (melted)
         -Filtered for Colorado ZIP Codes (prefix 80-81)
@@ -59,23 +65,31 @@ Forecasting Colorado Home Values by Zip Code
     - xgboost
     - streamlit 
 
-6. How to Run
-   Launch Streamlit App
+6. How to Run:
+
+   Launch Streamlit App for dashboard:
         streamlit run dashboard.py
         exit with ^c
     
+    Step by step of process:
     Run notebooks Capstone.ipynb
 
-7. Results
-    Example output for ZIP 80134:
-    Mean Absolute Error (Test): $8,732
+    Pipeline:
+    Run run.py
+
+   7. Results
+       Example output for ZIP 80134 
+
+       Random Forest: $8,893
+       XGBoost: $9,364
+
     Key Findings:
-    Median MAE across all ZIPs: ~$12,000
-    Highest MAE ZIP Codes appeared to be in smaller ZIP Codes to the West, in the mountains, or newer communities along the Front Range.
-    Areas like North Field in Denver which has a large number of new builds over a smaller area.
+       
+      Highest MAE ZIP Codes appeared to be in smaller ZIP Codes to the West, in the mountains, or newer/smaller communities along the Front Range.
+      Areas like North Field in Denver which have a large number of new builds over a smaller area.
     
 8. Limitations and Future Work
-    - Models were trained per ZIP; pooling data and creating areas like West Mountains, Front Range, and Eastern Plains
+    - Models were trained per ZIP; Separating the state into thirds and creating areas like West Mountains, Front Range, and Eastern Plains
         may improve the results.
     - Access to greater detail data may help create a better all around tool. Using the Multiple Listing Service (MLS) to access home size,
         number of bedrooms, number of bathrooms could create a more accurate picture for individual homes.
@@ -87,17 +101,32 @@ Forecasting Colorado Home Values by Zip Code
 9. Repository Structure
 
     data/
-        
-    Generate_MAE_by_ZIP.py
-    forecast_model.py
+        external
+        processed
+        raw
+    artifacts/
+    app/
+        __init__.py
+        evaluate.py
+        features.py
+        forecast.py
+        ingest.py
+        splitting.py
+        train.py
+    Generate_MAE_by_ZIP.py *
+    forecast_model.py *
     notebooks/
         Capstone.ipynb
-    dashboard.py
+    dashboard.py *
     requirements.txt
+    run.py
     README.md
 
-10. References
+    * items with (*) are left to show progression for pipeline and app.
+
+10. links to data:
 
     Zillow Research Data: https://www.zillow.com/research/data/
     USPS ZIP Centroid data: https://geodata.colorado.gov/datasets/fedmaps::census-zip-code-tabulation-areas/about
+
     
