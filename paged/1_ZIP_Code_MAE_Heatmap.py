@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pydeck as pdk
-from Generate_MAE_by_ZIP import generate_mae_by_zip
+from notebooks.Generate_MAE_by_ZIP import generate_mae_by_zip
 
 st.title("ZIP Code Model Accuracy Heatmap")
 st.caption("This map visualizes model error by ZIP code. Lower MAE means more accurate predictions.")

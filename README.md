@@ -1,5 +1,8 @@
 Forecasting Colorado Home Values by Zip Code
 
+Research question.
+Can historical housing price trends be used to reliably forecast future home values at the ZIP code level in Colorado?
+
 1. Quick Results Summary
    - Overall Median Mean Absolute Error (MAE) across all ZIPS 
      - Random Forest: $8,893
@@ -67,15 +70,17 @@ Forecasting Colorado Home Values by Zip Code
 
 6. How to Run:
 
-   Launch Streamlit App for dashboard:
-        streamlit run dashboard.py
-        exit with ^c
+   
     
     Step by step of process:
     Run notebooks Capstone.ipynb
 
     Pipeline:
     Run run.py
+
+    Launch Streamlit App for dashboard (takes about 30 seconds. Run after artifacts created: mae_by_zip_rf.csv and mae_by_zip_xgb.csv):
+        streamlit run dashboard.py
+        exit with ^c
 
    7. Results
        Example output for ZIP 80134 
